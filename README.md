@@ -1,9 +1,7 @@
 # PWM-Servo-Hat-Through-Apache-Demo
 A demo of controlling the Adafruit PWM/Servo hat through an Apache-served web page
 
-This is intended to be an "educational piece". You are welcome to do whatever you'd like with the code. (MIT license.)
-
-At this time the code causes the servos to jump a lot, so I don't think I am setting the values correctly. But it is useful to show how a Python script can be used through Apache.
+This is intended to be an "educational piece". You are welcome to do whatever you'd like with the code. (MIT license.) It is useful to show how a Python script can be used through Apache.
 
 Requirements:
 * Raspberry Pi with a PWM/Servo Hat from Adafruit Industries (https://learn.adafruit.com/adafruit-16-channel-pwm-servo-hat-for-raspberry-pi/)
