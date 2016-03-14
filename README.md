@@ -8,6 +8,7 @@ Requirements:
 * Apache
 * mod_python Apache module. 
 * Adafruit library for the hat (https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code)
+* Connect the tilt servo to PWM/Servo connection 14 and the pan servo to 15.
 
 I simply copied the scripts from the PWM folder of the Adafruit library into the same directory as I placed these script files. You can just drop them in your /var/www/html, or create a separate directory for them. (I will not get into how to add a directory to Apache since there are multiple tutorials online.)
 
