@@ -1,5 +1,11 @@
+# This is a demo for Apache mod_python written as a way to show how to control hardware via the web.
+# Written by Leland Green... Released under MIT license.
+# Part of the repository:
+# https://github.com/lelandg/PWM-Servo-Hat-Through-Apache-Demo
+
 from Adafruit_PWM_Servo_Driver import PWM
-import picamera
+# import picamera # For some reason, creating an instance of the camera
+# "crashes" the app and it returns an empty response. On my TODO list.
 import time
 from jsonrpc import ServiceMethod
 
@@ -18,29 +24,36 @@ def index(req):
     #    s.pan_right()
     return "Here's the _piserved.index()"
 
+# Which servos to use:
+
+cameraTiltServo = 14
+cameraPanServo = 15
+
+STEPSERVOS = True # When True, the movement will be made slower and smoother, so it does not jerk
 
 # Initialise the PWM device using the default address
 # pwm = PWM(0x40, debug=True)
 pwm = PWM(0x40)
 pwm.setPWMFreq(60)  # Set frequency to 60 Hz
 
-servoMin = 0L  # Min pulse length out of 4096
-servoMax = 1000L  # Max pulse length out of 4096
-cameraServoMin = 0L  # Min pulse length out of 4096
-cameraPanServoMax = 2000L  # Max pulse length out of 4096
-cameraTiltServoMax = 1000L
-cameraPanCenter = (cameraPanServoMax - cameraServoMin) / 2
-cameraTiltCenter = (cameraTiltServoMax - cameraServoMin) / 2
-cameraTiltServo = 14
-cameraPanServo = 15
+panServoMin = 160L
+panServoMax = 620L
+tiltServoMin = 230L
+tiltServoMax = 320L
+panCenter = ((panServoMax - panServoMin) / 2) + panServoMin
+tiltCenter = ((tiltServoMax - tiltServoMin) / 2) + tiltServoMin
 
 
 class PiServed:
+    currentTilt = tiltCenter
+    currentPan = panCenter
+
     def __init__(self):
         self.camera = None
-        self.set_pan(cameraPanCenter)
-        self.set_tilt(cameraTiltCenter)
+        self.set_pan(self.currentPan)
+        self.set_tilt(self.currentTilt)
 
+        # Caution: This causes the current request to abort and you get an empty response error.
         # self.camera = picamera.PiCamera(sensor_mode=4)  # A hack! Pin 0 causes it to not light at all.
         # self.camera.led = True
         # self.camera.resolution = (1920, 1080)
@@ -48,47 +61,75 @@ class PiServed:
 
     @ServiceMethod
     def set_tilt(self, tilt):
-        if (cameraServoMin <= tilt <= cameraTiltServoMax) or 0 == tilt:
-            self.cameraTilt = tilt
-            pwm.setPWM(cameraTiltServo, 0, self.cameraTilt)
-            #set_servo_pulse(cameraTiltServo, self.cameraTilt)
+        if (tiltServoMin <= tilt <= tiltServoMax) or 0 == tilt:
+            step = 1
+            if tilt < self.currentTilt:
+                step = -1
+            if STEPSERVOS:
+                for j in range(self.currentTilt, tilt, step):
+                    self.currentTilt = j
+                    pwm.setPWM(cameraTiltServo, 0, self.currentTilt)
+                    time.sleep(0.001)
+            # range returns one "less" than the max, so go ahead and call this either way
+            self.currentTilt = tilt
+            pwm.setPWM(cameraTiltServo, 0, self.currentTilt)
+            # set_servo_pulse(cameraTiltServo, self.cameraTilt)
             # pwm.setPWM(cameraTiltServo, 0, 0)
 
     @ServiceMethod
     def set_pan(self, pan):
-        if (cameraServoMin <= pan <= cameraPanServoMax) or pan == 0:
-            self.cameraPan = pan
-            pwm.setPWM(cameraPanServo, 0, self.cameraPan)
-            #set_servo_pulse(cameraPanServo, self.cameraPan)
+        if (panServoMin <= pan <= panServoMax) or 0 == pan:
+            if STEPSERVOS:
+                step = 1
+                if pan < self.currentPan:
+                    step = -1
+                for j in range(self.currentPan, pan, step):
+                    self.currentPan = j
+                    pwm.setPWM(cameraPanServo, 0, self.currentPan)
+                    time.sleep(0.001)
+            # range returns one "less" than the max, so go ahead and call this either way
+            self.currentPan = pan
+            pwm.setPWM(cameraPanServo, 0, self.currentPan)
+            # set_servo_pulse(cameraPanServo, self.cameraPan)
             # pwm.setPWM(cameraPanServo, 0, 0)
 
     @ServiceMethod
     def tilt_up(self):
-        if self.cameraTilt < cameraTiltServoMax + 10:
-            self.set_tilt(self.cameraTilt + 10)
+        if 0 == self.currentTilt:
+            self.currentTilt = tiltServoMin
+        elif self.currentTilt < tiltServoMax + 10:
+            self.set_tilt(self.currentTilt + 10)
 
     @ServiceMethod
     def tilt_down(self):
-        if self.cameraTilt > cameraServoMin - 10:
-            self.set_tilt(self.cameraTilt - 10)
+        if self.currentTilt > tiltServoMin - 10:
+            self.set_tilt(self.currentTilt - 10)
 
     @ServiceMethod
     def pan_left(self):
-        if self.cameraPan > 10:
-            self.set_pan(self.cameraPan - 10)
+        if self.currentPan < panServoMax + 10:
+            self.set_pan(self.currentPan + 10)
 
     @ServiceMethod
     def pan_right(self):
-        if self.cameraPan < cameraPanServoMax + 10:
-            self.set_pan(self.cameraPan + 10)
+        if self.currentPan > 10:
+            self.set_pan(self.currentPan - 10)
+
+    @ServiceMethod
+    def pan_center(self):
+        self.set_pan(panCenter)
+
+    @ServiceMethod
+    def tilt_center(self):
+        self.set_tilt(tiltCenter)
 
     @ServiceMethod
     def get_tilt(self):
-        return self.cameraTilt
+        return self.currentTilt
 
     @ServiceMethod
     def get_pan(self):
-        return self.cameraPan
+        return self.currentPan
 
     @ServiceMethod
     def close(self):
@@ -123,3 +164,5 @@ def set_servo_pulse(channel, pulse):
 
 # if __name__ == "__main__":
 #    main()
+#     print "This is a mod_python module for Apache web server.\r\n" +\
+#           "There is no command line interface at this time."
