@@ -8,30 +8,116 @@ page_text = """
 </head>
 <body>
 <FORM value="form" action="/PiServed/show_info" method="post">
-    <P>
-    <INPUT type="submit" name="tiltup" value="Tilt Up"></P>
-    <P>
-    <INPUT type="submit" name="panleft" value="Pan Left" size="20" maxlength="4">&nbsp;&nbsp;
-    <INPUT type="submit" name="panright" value="Pan Right" size="20" maxlength="4"><BR>
-    </P>
-    <P>
-    <INPUT type="submit" name="tiltdown" value="Tilt Down"><BR>
-    </P>
-    <P>
-    Set Pan:    <input type="text" name="setpan"><BR><BR>
-    Set Tilt:   <input type="text" name="settilt"><BR><BR>
-    <INPUT type="submit" value="Submit"><BR><BR>
-
-    <input type="submit" name="minpan" value="Min Pan">&nbsp;&nbsp;
-    <input type="submit" name="maxpan" value="Max Pan"><BR><BR>
-    <input type="submit" name="mintilt" value="Min Tilt">&nbsp;&nbsp;
-    <input type="submit" name="maxtilt" value="Max Tilt"><BR><BR>
-
-    Set both to minimum: <INPUT type="submit" name="zero" value="Min Both">&nbsp;&nbsp;
-    Set both to maximum: <INPUT type="submit" name="max" value="Max Both"><BR><BR>
-    <input type="submit" name="centerpan" value="Center Pan">&nbsp;&nbsp;
-    <input type="submit" name="centertilt" value="Center Tilt"><BR><BR>
-    </P>
+<table width="800" align="center" border="2">
+    <tr>
+        <td align="center">
+            <table columns="2" cellpadding="5" cellspacing="5">
+                <tr>
+                    <td colspan="2">
+                    <strong>Incremental Movement</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <INPUT type="submit" name="tiltup" value="Tilt Up">
+                    <td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <INPUT type="submit" name="panleft" value="Pan Left" size="20" maxlength="4">
+                    </td>
+                    <td align="center">
+                        <INPUT type="submit" name="panright" value="Pan Right" size="20" maxlength="4">
+                    </td>
+                <tr>
+                    <td colspan="2" align="center">
+                        <INPUT type="submit" name="tiltdown" value="Tilt Down">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <table columns="2" cellpadding="5" cellspacing="5">
+                <tr>
+                    <td colspan="2" align="center">
+                    <strong>Set specified values.</strong><br><sub>(Will be validated to be within range.)</sub>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        Set Pan:<br><input type="text" name="setpan" colspan="2">
+                    </td>
+                    <td align="center">
+                        Set Tilt:<br><input type="text" name="settilt" colspan="2">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <INPUT type="submit" value="Submit">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <table columns="2" cellpadding="5" cellspacing="5">
+                <tr>
+                    <td colspan="2">
+                    <strong>Minimums and Maximums</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" name="mintilt" value="Min Tilt">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <input type="submit" name="minpan" value="Min Pan">
+                    </td>
+                    <td align="center">
+                        <input type="submit" name="maxpan" value="Max Pan">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" name="maxtilt" value="Max Tilt">
+                    </td>
+                </tr>
+            </table><br>
+            <table columns="2" cellpadding="5" cellspacing="5">
+                <tr>
+                    <td colspan="2" align="center">
+                        <strong>Centering</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <input type="submit" name="centerpan" value="Center Pan">
+                    </td>
+                    <td align="center">
+                        <input type="submit" name="centertilt" value="Center Tilt">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <table columns="2" cellpadding="5" cellspacing="5">
+                <tr>
+                    <td colspan="2">
+                    <strong>Minimums and Maximums</strong> <br><sub>(for both servos)</sub>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <INPUT type="submit" name="zero" value="Min Both">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <INPUT type="submit" name="max" value="Max Both">
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 </FORM>
 
 <P>Current Tilt: %s <br>Currnt Pan: %s
