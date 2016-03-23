@@ -10,7 +10,7 @@ Requirements:
 * Adafruit library for the hat (https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code)
 * Connect the tilt servo to PWM/Servo connection 14 and the pan servo to 15.
 
-I simply copied the scripts from the PWM folder of the Adafruit library into the same directory as I placed these script files. You can just drop them in your /var/www/html, or create a separate directory for them. (I will not get into how to add a directory to Apache since there are multiple tutorials online.)
+I simply copied the scripts from the PWM folder of the Adafruit library into the same directory as I placed these script files. You can just drop them in your /var/www/html, or create a separate directory for them. (I will not get into how to add a directory to Apache since there are multiple tutorials online and since I just use /var/www/html.)
 
 If you install to /var/www/html, you can then point your browser to http://localhost/PiServed. Click some buttons or input some values and then click some buttons. Watch your servos move. :)
 
