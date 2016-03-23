@@ -3,17 +3,17 @@ This is a demo of controlling the Adafruit PWM/Servo Pi Hat through an Apache-se
 
 This is intended to be an "educational piece". You are welcome to do whatever you'd like with the code. (MIT license.) It is useful to show how a Python script can be used through Apache.
 
-You should be able to easily extend this concept to control **any** hardware on your RPi through Python, and control anything else on any Linux platform. (You may need to configure the security first on other platforms, embedded and otherwise, than the RPi.)
+You should be able to easily extend this concept to control **any** hardware on your RPi through Python, and control anything else on any Linux platform. (You may need to configure the security first on other platforms other than the RPi, both embedded and otherwise.)
 
 Requirements:
 * Raspberry Pi with a PWM/Servo Pi Hat from Adafruit Industries (https://learn.adafruit.com/adafruit-16-channel-pwm-servo-hat-for-raspberry-pi/)
-* Apache
-* mod_python Apache module. 
+* Apache web server
+* mod_python Apache module
 * Adafruit library for the hat (https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code)
-* Connect the tilt servo to PWM/Servo connection 14 and the pan servo to 15.
+* Connect the tilt servo to PWM/Servo Pi Hat PWM connection 14 and the pan servo to 15, by default.
 
 I simply copied the scripts from the PWM folder of the Adafruit library into the same directory as I placed these script files. You can just drop them in your /var/www/html, or create a separate directory for them. (I will not get into how to add a directory to Apache since there are multiple tutorials online and since I just use /var/www/html.)
 
 If you install to /var/www/html, you can then point your browser to http://localhost/PiServed. Click some buttons or input some values and then click some buttons. Watch your servos move. :)
 
-Please let me know if you have any questions. Feel free to create issues, even if they're only for questions about the project.
+Please let me know if you have any thoughts or questions. Feel free to create issues, even if they're "only" to discuss the project (as recommended by GitHub's own best-use policy example).
