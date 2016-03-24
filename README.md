@@ -7,8 +7,8 @@ You should be able to easily extend this concept to control **any** hardware on 
 
 Requirements:
 * Raspberry Pi with a PWM/Servo Pi Hat from Adafruit Industries (https://learn.adafruit.com/adafruit-16-channel-pwm-servo-hat-for-raspberry-pi/)
-* Apache web server
-* mod_python Apache module
+* Apache web server (sudo apt-get install apache2 -y)
+* mod_python Apache module (sudo apt-get install libapache2-mod-python -y)
 * Adafruit library for the hat (https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code)
 * Connect the tilt servo to PWM/Servo Pi Hat PWM connection 14 and the pan servo to 15, by default.
 
