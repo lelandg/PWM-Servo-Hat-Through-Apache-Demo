@@ -20,5 +20,7 @@ Please let me know if you have any thoughts or questions. Feel free to create is
 
 * This project deserves love.
   * You have love to give.
-    * Ergo... 
-      * ❤
+    * Ergo,
+      * We go, 
+        * ❤
+          * 🖖😎
