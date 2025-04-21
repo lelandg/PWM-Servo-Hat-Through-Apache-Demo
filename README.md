@@ -17,10 +17,3 @@ I simply copied the scripts from the PWM folder of the Adafruit library into the
 If you install to /var/www/html, you can then point your browser to http://localhost/PiServed. Click some buttons or input some values and then click some buttons. Watch your servos move. :)
 
 Please let me know if you have any thoughts or questions. Feel free to create issues, even if they're "only" to discuss the project (as recommended by GitHub's own best-use policy example).
-
-* This project deserves love.
-  * You have love to give.
-    * Ergo,
-      * We go, 
-        * ❤
-          * 🖖😎
